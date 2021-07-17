@@ -1,0 +1,42 @@
+version: 3
+
+vars:
+  APP_NAME: flora_app_api
+  VENV_NAME: venv
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  install:venv:
+    desc: Install basic venv
+    cmds:
+      - apt install python3.8-venv
+
+  setup:venv:
+    desc: Setup basic venv for project
+    cmds:
+      - python -m venv {{.VENV_NAME}}
+
+  start:venv:
+    desc: Show command to run in terminal which starts venv
+    cmds:
+      - echo 'source {{.VENV_NAME}}/bin/activate'
+
+  install:dependencies:
+    desc: Run install requirements from Pipfile
+    cmds:
+      - pipenv install
+
+  init:
+    desc: Init basic packages and software for first start
+    cmds:
+      - task setup:venv
+      - python -m pip install pipenv
+
+  start:
+    desc: Start application
+    cmds:
+      - task: install:dependencies
+      - python src/app.py
