@@ -1,0 +1,117 @@
+swagger: '2.0'
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /health:
+    get:
+      operationId: src.controllers.health.index
+      summary: Main Api page
+      description: Show information on api main page
+      responses:
+        200:
+          description: Api works
+
+  /devices/{device_id}/measurements:
+    get:
+      operationId: src.controllers.device.measurement_get
+      summary: Device section
+      parameters:
+        - $ref: '#parameters/device_id'
+      description: Show measurements for device
+      consumes:
+        - application/json
+
+      responses:
+        200:
+          description: List of measured data for device
+    post:
+      operationId: src.controllers.device.measurement_create
+      summary: Device section
+      description: Add measurement for a specific device
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#parameters/device_id'
+        - in: body
+          name: measure
+          description: Data to save
+          schema:
+            type: object
+            required:
+              - date
+              - temperature
+              - humility
+              - light
+              - water_level
+            properties:
+              date:
+                type: string
+                format: date-time
+              temperature:
+                type: number
+                format: float
+              humility:
+                type: number
+                format: float
+              light:
+                type: number
+                format: float
+              water_level:
+                type: number
+                format: float
+      responses:
+        201:
+          description: No content
+        400:
+          description: Data already exists
+  /devices:
+    get:
+      operationId: src.controllers.device.device_get
+      summary: Device section
+      description: List devices
+      consumes:
+        - application/json
+
+      responses:
+        200:
+          description: List of devices
+    post:
+      operationId: src.controllers.device.device_create
+      summary: Device section
+      description: Add device
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: data
+          description: Data to save
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+      responses:
+        201:
+          description: No content
+        400:
+          description: Data already exists
+
+parameters:
+  device_id:
+    name: device_id
+    description: Device's Unique identifier
+    in: path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
