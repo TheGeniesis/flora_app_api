@@ -4,7 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask = "*"
+twilio = "*"
+flask-dance = {extras = ["sqla"], version = "*"}
+swagger-ui-bundle = "*"
+connexion = {extras = ["swagger-ui"], version = "*"}
 python-dotenv = "*"
+event-notifier = "*"
+psycopg2-binary = "*"
+flask-marshmallow = "*"
 
 [dev-packages]
 

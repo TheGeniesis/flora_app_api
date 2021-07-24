@@ -27,7 +27,7 @@ tasks:
   install:dependencies:
     desc: Run install requirements from Pipfile
     cmds:
-      - pipenv install
+      - pipenv install --skip-lock
 
   init:
     desc: Init basic packages and software for first start
@@ -39,4 +39,5 @@ tasks:
     desc: Start application
     cmds:
       - task: install:dependencies
+      - docker-compose up -d
       - python src/app.py
