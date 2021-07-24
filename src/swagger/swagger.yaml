@@ -19,26 +19,31 @@ paths:
       responses:
         200:
           description: Api works
+        500:
+          $ref: '#responses/500'
 
   /devices/{device_id}/measurements:
     get:
-      operationId: src.controllers.device.measurement_get
+      operationId: src.controllers.device_measurement.measurement_get
       summary: Device section
       parameters:
         - $ref: '#parameters/device_id'
       description: Show measurements for device
-      consumes:
-        - application/json
-
       responses:
         200:
           description: List of measured data for device
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
     post:
-      operationId: src.controllers.device.measurement_create
+      operationId: src.controllers.device_measurement.measurement_create
       summary: Device section
       description: Add measurement for a specific device
-      consumes:
-        - application/json
       parameters:
         - $ref: '#parameters/device_id'
         - in: body
@@ -69,10 +74,18 @@ paths:
                 type: number
                 format: float
       responses:
-        201:
-          description: No content
+        204:
+          $ref: '#responses/204'
         400:
-          description: Data already exists
+          $ref: '#responses/400'
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
   /devices:
     get:
       operationId: src.controllers.device.device_get
@@ -84,6 +97,12 @@ paths:
       responses:
         200:
           description: List of devices
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        500:
+          $ref: '#responses/500'
     post:
       operationId: src.controllers.device.device_create
       summary: Device section
@@ -102,10 +121,18 @@ paths:
               name:
                 type: string
       responses:
-        201:
-          description: No content
+        204:
+          $ref: '#responses/204'
         400:
-          description: Data already exists
+          $ref: '#responses/400'
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
 
 parameters:
   device_id:
@@ -115,3 +142,17 @@ parameters:
     type: string
     required: true
     pattern: "^[a-zA-Z0-9-]+$"
+
+responses:
+  204:
+    description: Data created successfuly
+  400:
+    description: Invalid data provided
+  401:
+    description: Invalid token
+  403:
+    description: Forbidden acces
+  404:
+    description: Resource not found
+  500:
+    description: Internal server error

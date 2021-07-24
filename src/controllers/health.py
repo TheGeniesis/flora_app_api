@@ -1,7 +1,7 @@
+from http import HTTPStatus
+
 from flask import jsonify
 
 
 def index():
-    resp = jsonify(success=True)
-
-    return resp
+    return jsonify(success=True), HTTPStatus.OK
