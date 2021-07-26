@@ -74,8 +74,8 @@ paths:
                 type: number
                 format: float
       responses:
-        204:
-          $ref: '#responses/204'
+        201:
+          $ref: '#responses/201'
         400:
           $ref: '#responses/400'
         401:
@@ -121,8 +121,8 @@ paths:
               name:
                 type: string
       responses:
-        204:
-          $ref: '#responses/204'
+        201:
+          $ref: '#responses/201'
         400:
           $ref: '#responses/400'
         401:
@@ -144,6 +144,8 @@ parameters:
     pattern: "^[a-zA-Z0-9-]+$"
 
 responses:
+  201:
+    description: Data created successfuly, created model
   204:
     description: Data created successfuly
   400:

@@ -2,11 +2,11 @@ import datetime
 from http import HTTPStatus
 
 from connexion import NoContent
-from flask import request
+from flask import request, jsonify
 from sqlalchemy.orm import sessionmaker
 
 from src.models.DeviceModel import DeviceModel
-from src.models.MeasurementModel import MeasurementModel
+from src.models.MeasurementModel import MeasurementModel, MeasurementSchema
 from src.services.core.db.engine import get_engine
 from src.services.core.dispatcher.EventDispatcher import EventDispatcher
 
@@ -14,7 +14,7 @@ from src.services.core.dispatcher.EventDispatcher import EventDispatcher
 def measurement_create(device_id):
     data = request.get_json()
 
-    measure_date = data['time']
+    measure_date = data['date']
     temperature = data['temperature']
     humility = data['humility']
     light = data['light']
@@ -22,7 +22,7 @@ def measurement_create(device_id):
 
     session = sessionmaker(bind=get_engine())()
 
-    device = session.query(DeviceModel).filter(int(device_id) == DeviceModel.id).first()
+    device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
 
     if type(device) is DeviceModel:
         ins = MeasurementModel(temperature=temperature, light=light, humility=humility, waterLevel=water_level,
@@ -30,37 +30,21 @@ def measurement_create(device_id):
         session.add(ins)
         session.commit()
 
-        EventDispatcher().get_dispatcher().raise_event("onHomeViewReload")
-        EventDispatcher().get_dispatcher().raise_event("onVideoViewReload")
+        # EventDispatcher().get_dispatcher().raise_event("onVideoViewReload")
 
-        return NoContent, HTTPStatus.NO_CONTENT
+        return MeasurementSchema().dump(ins), HTTPStatus.CREATED
 
-    return NoContent, HTTPStatus.BAD_REQUEST
+    return NoContent, HTTPStatus.NOT_FOUND
 
 
 def measurement_get(device_id):
-    #
-    # data = request.get_json()
-    #
-    # measure_date = data['time']
-    # temperature = data['temperature']
-    # humility = data['humility']
-    # light = data['light']
-    # water_level = data['water_level']
-    #
-    # base = BaseModel()
-    # session = sessionmaker(bind=base.getEngine())()
-    #
-    # device = session.query(DeviceModel).filter(int(device_id) == DeviceModel.id).first()
-    #
-    # if type(device) is DeviceModel:
-    #     ins = MeasurementModel(temperature=temperature, light=light, humility=humility, waterLevel=water_level, device=device, measureDate=measure_date, createdAt=datetime.date.today())
-    #     session.add(ins)
-    #     session.commit()
-    #
-    #     EventDispatcher().get_dispatcher().raise_event("onHomeViewReload")
-    #     EventDispatcher().get_dispatcher().raise_event("onVideoViewReload")
-    #
-    #     return NoContent, 201
+    session = sessionmaker(bind=get_engine())()
 
-    return NoContent, HTTPStatus.BAD_REQUEST
+    device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
+
+    if type(device) is DeviceModel:
+        devices = session.query(MeasurementModel).filter(device == MeasurementModel.device)
+
+        return MeasurementSchema(many=True).dump(devices), HTTPStatus.OK
+
+    return jsonify({"message": "Device not found"}), HTTPStatus.NOT_FOUND

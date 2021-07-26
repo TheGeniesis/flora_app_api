@@ -40,4 +40,4 @@ tasks:
     cmds:
       - task: install:dependencies
       - docker-compose up -d
-      - python src/app.py
+      - python app.py

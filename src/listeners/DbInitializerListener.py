@@ -15,8 +15,8 @@ class DbInitializerListener:
 
     def on_kernel_start(self):
 
-        Base.metadata.create_all(get_engine(), checkfirst=True)
         import src.models.DeviceModel
         import src.models.MeasurementModel
+        Base.metadata.create_all(get_engine(), checkfirst=True)
 
         load_fixtures()
