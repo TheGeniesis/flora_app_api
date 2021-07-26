@@ -29,7 +29,7 @@ def device_create():
 
     # EventDispatcher().get_dispatcher().raise_event("onHomeViewReload")
 
-    return NoContent, HTTPStatus.NO_CONTENT
+    return DeviceSchema().dump(ins), HTTPStatus.CREATED
 
 
 def device_get():

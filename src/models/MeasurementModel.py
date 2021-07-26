@@ -1,9 +1,9 @@
 import uuid
 
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import Column, Integer, DateTime, ForeignKey, Float
+from sqlalchemy import Column, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from src.services.core.db.engine import Base
+from src.services.core.db.engine import Base, ma
 
 
 class MeasurementModel(Base):
@@ -36,7 +36,7 @@ class MeasurementModel(Base):
         nullable=True
     )
 
-    deviceId = Column(Integer(), ForeignKey('device.id'))
+    deviceId = Column(UUID(as_uuid=True), ForeignKey('device.id'))
     device = relationship("DeviceModel", back_populates="measurements")
 
     measureDate = Column(
@@ -47,4 +47,18 @@ class MeasurementModel(Base):
     createdAt = Column(
         DateTime(),
         nullable=False
+    )
+
+
+class MeasurementSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("id", "temperature", "light", "humility", "waterLevel", "measureDate")
+
+    # Smart hyperlinking
+    _links = ma.Hyperlinks(
+        {
+            "self": ma.URLFor("measurement", values=dict(id="<id>")),
+            "collection": ma.URLFor("measurements"),
+        }
     )
