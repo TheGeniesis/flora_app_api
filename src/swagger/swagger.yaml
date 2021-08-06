@@ -133,6 +133,59 @@ paths:
           $ref: '#responses/404'
         500:
           $ref: '#responses/500'
+  /devices/{device_id}:
+    put:
+      operationId: src.controllers.device.device_update
+      summary: Device section
+      description: Update device
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#parameters/device_id'
+        - in: body
+          name: data
+          description: Data to update
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: Data update sucessfully. Returns updated record
+        400:
+          $ref: '#responses/400'
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
+    delete:
+      operationId: src.controllers.device.device_delete
+      summary: Device section
+      description: Delete device
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#parameters/device_id'
+      responses:
+        204:
+          $ref: '#responses/204'
+        400:
+          $ref: '#responses/400'
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
 
 parameters:
   device_id:
