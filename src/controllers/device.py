@@ -1,11 +1,14 @@
-import datetime
+from datetime import datetime
+
 from http import HTTPStatus
 
 from flask import request
 from sqlalchemy.orm import sessionmaker
 
 from src.models.DeviceModel import DeviceModel, DeviceSchema
+from src.models.SensorModel import SensorModel
 from src.services.core.db.engine import get_engine
+from src.services.core.dispatcher.EventDispatcher import EventDispatcher
 
 
 def device_create():
@@ -22,13 +25,18 @@ def device_create():
                    "message": "Data already exists"
                }, HTTPStatus.BAD_REQUEST
 
-    ins = DeviceModel(name=device_name, createdAt=datetime.date.today())
-    session.add(ins)
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    device = DeviceModel(name=device_name, createdAt=now)
+    session.add(device)
+    sensor = SensorModel(device=device, createdAt=now, humility=5, waterAmount=50,
+                         waterTime=datetime.now().replace(hour=7, minute=00), waterAutoMode=True, updatedAt=now)
+    session.add(sensor)
+
     session.commit()
 
-    # EventDispatcher().get_dispatcher().raise_event("onHomeViewReload")
+    EventDispatcher().get_dispatcher().raise_event("onSensorUpdate", sensor=sensor)
 
-    return DeviceSchema().dump(ins), HTTPStatus.CREATED
+    return DeviceSchema().dump(device), HTTPStatus.CREATED
 
 
 def device_update(device_id):

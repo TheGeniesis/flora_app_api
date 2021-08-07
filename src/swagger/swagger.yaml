@@ -187,10 +187,101 @@ paths:
         500:
           $ref: '#responses/500'
 
+  /devices/{device_id}/sensors:
+    get:
+      operationId: src.controllers.device_sensor.sensor_get_all
+      summary: Device section
+      parameters:
+        - $ref: '#parameters/device_id'
+      description: Show sensor data for device
+      responses:
+        200:
+          description: Sensor data for device
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
+  /devices/{device_id}/sensors/{sensor_id}:
+    get:
+      operationId: src.controllers.device_sensor.sensor_get
+      summary: Device section
+      parameters:
+        - $ref: '#parameters/device_id'
+        - $ref: '#parameters/sensor_id'
+      description: Show sensor data for device
+      responses:
+        200:
+          description: Sensor data for device
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
+    put:
+      operationId: src.controllers.device_sensor.sensor_update
+      summary: Device section
+      description: Update sensor data for a specific device
+      parameters:
+        - $ref: '#parameters/device_id'
+        - $ref: '#parameters/sensor_id'
+        - in: body
+          name: sensor
+          description: Data to save
+          schema:
+            type: object
+            required:
+              - water_amount
+              - water_time
+              - water_auto_mode
+              - humility
+            properties:
+              water_amount:
+                type: number
+                format: float
+                minimum: 1
+                maximum: 200
+              water_time:
+                type: string
+                pattern: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+              water_auto_mode:
+                type: boolean
+              humility:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 100
+      responses:
+        200:
+          description: Data updated. Sensor data for device
+        400:
+          $ref: '#responses/400'
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
 parameters:
   device_id:
     name: device_id
     description: Device's Unique identifier
+    in: path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+  sensor_id:
+    name: sensor_id
+    description: Sensor's Unique identifier
     in: path
     type: string
     required: true

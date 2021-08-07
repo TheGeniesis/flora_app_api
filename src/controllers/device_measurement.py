@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from http import HTTPStatus
 
 from connexion import NoContent
@@ -26,7 +26,8 @@ def measurement_create(device_id):
 
     if type(device) is DeviceModel:
         ins = MeasurementModel(temperature=temperature, light=light, humility=humility, waterLevel=water_level,
-                               device=device, measureDate=measure_date, createdAt=datetime.date.today())
+                               device=device, measureDate=measure_date,
+                               createdAt=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         session.add(ins)
         session.commit()
 
