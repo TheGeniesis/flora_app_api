@@ -23,6 +23,7 @@ class DeviceModel(Base):
     )
 
     measurements = relationship("MeasurementModel", back_populates="device")
+    sensors = relationship("SensorModel", back_populates="device")
 
     createdAt = Column(
         DateTime(),
