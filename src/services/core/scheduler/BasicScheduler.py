@@ -1,7 +1,6 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from src.services.core.SingletonMeta import SingletonMeta
 
-
 class BasicScheduler(metaclass=SingletonMeta):
     __scheduler = None
 
@@ -30,12 +29,3 @@ class BasicScheduler(metaclass=SingletonMeta):
         self.__scheduler.start()
 
         return self.__scheduler
-
-    def reschedule_job(self, time: str, job_id: str, callback):
-        scheduler = self.get_scheduler()
-        job = scheduler.get_job(job_id)
-        if job:
-            job.remove()
-
-        result = time.split(":")
-        scheduler.add_job(callback, 'cron', hour=result[0], minutes=result[1], id=job_id)
