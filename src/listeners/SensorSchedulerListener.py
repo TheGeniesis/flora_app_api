@@ -1,10 +1,8 @@
 import json
 
 from src.models.SensorModel import SensorModel, SensorSchema
-from src.services.core.config.Config import Config
+from src.services.core.rabbit.BasicBroker import BasicBroker
 from src.services.core.scheduler.BasicScheduler import BasicScheduler
-
-import pika
 
 
 class SensorSchedulerListener:
@@ -21,30 +19,20 @@ class SensorSchedulerListener:
         scheduler = BasicScheduler()
 
         if sensor.waterAutoMode:
-
             scheduler.get_scheduler().add_job(self.water_plant, trigger='interval', seconds=1,
                                               id="water_plant", replace_existing=True,
-                                              kwargs={'sensor': sensor})
+                                              kwargs={'sensor': SensorSchema().dump(sensor)})
             pass
         scheduler.get_scheduler().add_job(self.water_plant, 'cron',
                                           hour=sensor.waterTime.hour, minute=sensor.waterTime.minute,
                                           id="water_plant", replace_existing=True,
-                                          kwargs={'sensor': sensor})
+                                          kwargs={'sensor': SensorSchema().dump(sensor)})
 
     def water_plant(self, sensor):
         if sensor.waterAutoMode:
             if sensor.humility > 5:
                 pass
+        broker = (BasicBroker()).get_broker()
 
-        config = Config().get_config()
-        credentials = pika.PlainCredentials(config["RABBITMQ"]["USER"], config["RABBITMQ"]["PASSWORD"])
+        broker.send(json.dumps(sensor), routing_key='flask_rabmq.watering', exchange_name='flask_rabmq')
 
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=config["RABBITMQ"]["HOST"], port=config["RABBITMQ"]["PORT"],
-                                      credentials=credentials))
-        channel = connection.channel()
-        channel.queue_declare(queue='watering')
-        channel.basic_publish(exchange='',
-                              routing_key='watering',
-                              body=json.dumps(SensorSchema().dump(sensor)))
-        connection.close()
