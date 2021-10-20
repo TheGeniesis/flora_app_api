@@ -34,10 +34,10 @@ tasks:
     cmds:
       - task setup:venv
       - python -m pip install pipenv
-
+      - docker build --tag rabbitmq -f devOps/docker/rabbitmq/Dockerfile devOps/docker/rabbitmq/.
   start:
     desc: Start application
     cmds:
       - task: install:dependencies
       - docker-compose up -d
-      - python app.py
+      - FLASK_ENV=development python app.py
