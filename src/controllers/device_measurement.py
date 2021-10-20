@@ -8,32 +8,17 @@ from sqlalchemy.orm import sessionmaker
 from src.models.DeviceModel import DeviceModel
 from src.models.MeasurementModel import MeasurementModel, MeasurementSchema
 from src.services.core.db.engine import get_engine
-from src.services.core.dispatcher.EventDispatcher import EventDispatcher
+from src.services.domain.measurement import create
 
 
 def measurement_create(device_id):
     data = request.get_json()
+    data['device_id'] = device_id
 
-    measure_date = data['date']
-    temperature = data['temperature']
-    humility = data['humility']
-    light = data['light']
-    water_level = data['water_level']
+    result = create(data)
 
-    session = sessionmaker(bind=get_engine())()
-
-    device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
-
-    if type(device) is DeviceModel:
-        ins = MeasurementModel(temperature=temperature, light=light, humility=humility, waterLevel=water_level,
-                               device=device, measureDate=measure_date,
-                               createdAt=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        session.add(ins)
-        session.commit()
-
-        # EventDispatcher().get_dispatcher().raise_event("onVideoViewReload")
-
-        return MeasurementSchema().dump(ins), HTTPStatus.CREATED
+    if result:
+        return MeasurementSchema().dump(result), HTTPStatus.CREATED
 
     return NoContent, HTTPStatus.NOT_FOUND
 

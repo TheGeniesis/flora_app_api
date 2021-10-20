@@ -14,8 +14,8 @@ class BasicBroker(metaclass=SingletonMeta):
 
         ramq = RabbitMQ()
 
-        app = App().get_app()
-        app.config = (Config()).get_config()["RABBITMQ"]
+        app = App().get_app().app
+        app.config.update(Config().get_config()["RABBITMQ"])
 
         ramq.init_app(app=app)
 

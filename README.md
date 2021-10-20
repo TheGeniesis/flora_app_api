@@ -27,7 +27,7 @@ Run `task` command to see possibilities
 ## Links
 
 - [RabbitMQ UI](http://localhost:15672/)
-- [Swagger doc](http://localhost:8002/api/ui)
+- [Swagger doc](http://localhost:8004/api/ui)
 
 ## Improvements
 

@@ -5,3 +5,6 @@ jobs.sqlite
 
 postgres-data
 /rabbitmq
+
+
+debug.log
