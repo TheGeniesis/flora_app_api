@@ -34,5 +34,5 @@ class SensorSchedulerListener:
                 pass
         broker = (BasicBroker()).get_broker()
 
-        broker.send(json.dumps(sensor), routing_key='flask_rabmq.watering', exchange_name='flask_rabmq')
+        broker.send(json.dumps(sensor), routing_key='amq_topic.watering', exchange_name='flask_rabmq')
 

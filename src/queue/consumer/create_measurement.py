@@ -8,7 +8,7 @@ from src.services.domain.measurement import create
 def create_measurement():
     ramq = (BasicBroker()).get_broker()
 
-    @ramq.queue(exchange_name='flask_rabmq', routing_key='flask_rabmq.measurement')
+    @ramq.queue(exchange_name='amq.topic', routing_key='amq_topic.measurement')
     def consume(body):
         logger = logging.getLogger('queue')
         logger.warning('Consuming message: %s', 'create_measurement')
