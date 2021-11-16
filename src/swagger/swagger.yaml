@@ -88,7 +88,7 @@ paths:
           $ref: '#responses/500'
   /devices:
     get:
-      operationId: src.controllers.device.device_get
+      operationId: src.controllers.device.device_list_get
       summary: Device section
       description: List devices
       consumes:
@@ -134,6 +134,23 @@ paths:
         500:
           $ref: '#responses/500'
   /devices/{device_id}:
+    get:
+      operationId: src.controllers.device.device_get
+      summary: Device section
+      description: Show device data
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#parameters/device_id'
+      responses:
+        200:
+          description: Device data
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        500:
+          $ref: '#responses/500'
     put:
       operationId: src.controllers.device.device_update
       summary: Device section

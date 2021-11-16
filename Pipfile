@@ -16,7 +16,8 @@ flask-marshmallow = "*"
 apscheduler = "*"
 pika = "*"
 flask-rabmq = "*"
- 
+flask-cors = "*"
+
 [dev-packages]
 
 [requires]

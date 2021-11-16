@@ -21,9 +21,20 @@ def device_create():
 
     if type(device) is DeviceModel:
         return {
-                   "error": True,
-                   "message": "Data already exists"
-               }, HTTPStatus.BAD_REQUEST
+            "name": [
+                {
+                    "field": "name",
+                    "message": "Device with name %s already exists" % device_name
+                }
+            ]}, HTTPStatus.BAD_REQUEST
+    if device_name == "":
+        return {
+            "name": [
+                {
+                    "field": "name",
+                    "message": "Device name is empty"
+                }
+            ]}, HTTPStatus.BAD_REQUEST
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     device = DeviceModel(name=device_name, createdAt=now)
@@ -46,6 +57,24 @@ def device_update(device_id):
 
     session = sessionmaker(bind=get_engine())()
     device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
+
+    if type(session.query(DeviceModel).filter(device_name == DeviceModel.name, device_id != DeviceModel.id).first()) is DeviceModel:
+        return {
+            "name": [
+                {
+                    "field": "name",
+                    "message": "Device with name %s already exists" % device_name
+                }
+            ]}, HTTPStatus.BAD_REQUEST
+
+    if device_name == "":
+        return {
+            "name": [
+                {
+                    "field": "name",
+                    "message": "Device name is empty"
+                }
+            ]}, HTTPStatus.BAD_REQUEST
 
     if type(device) is not DeviceModel:
         return {
@@ -76,8 +105,15 @@ def device_delete(device_id):
     return {}, HTTPStatus.NO_CONTENT
 
 
-def device_get():
+def device_list_get():
     session = sessionmaker(bind=get_engine())()
     devices = session.query(DeviceModel).all()
 
     return DeviceSchema(many=True).dump(devices), HTTPStatus.OK
+
+
+def device_get(device_id):
+    session = sessionmaker(bind=get_engine())()
+    device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
+
+    return DeviceSchema().dump(device), HTTPStatus.OK

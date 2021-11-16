@@ -3,6 +3,8 @@ from src.services.core.config.Config import Config
 from src.services.core.dispatcher.EventDispatcher import EventDispatcher
 from src.services.core.loader.consumer import load_consumers
 from src.services.core.loader.listener import load_listeners
+from flask_cors import CORS
+
 import logging
 
 import os
@@ -10,7 +12,9 @@ import os
 
 if __name__ == "__main__":
 
-    app = App().get_app()
+    app = App().get_app().app
+    CORS(app)
+
     config = Config()
     config.init({
         "path": os.getcwd()
