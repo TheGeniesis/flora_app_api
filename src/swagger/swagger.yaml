@@ -287,6 +287,24 @@ paths:
           $ref: '#responses/404'
         500:
           $ref: '#responses/500'
+
+  /measurements:
+    get:
+      operationId: src.controllers.measurement.measurement_list_get
+      summary: Measurement section
+      description: Show measurements
+      responses:
+        200:
+          description: List of measured data for device
+        401:
+          $ref: '#responses/401'
+        403:
+          $ref: '#responses/403'
+        404:
+          $ref: '#responses/404'
+        500:
+          $ref: '#responses/500'
+
 parameters:
   device_id:
     name: device_id
