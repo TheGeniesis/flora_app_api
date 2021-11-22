@@ -20,7 +20,7 @@ def sensor_update(device_id: str, sensor_id: str):
     if type(sensor) is SensorModel:
         sensor.waterAmount = data['water_amount']
         sensor.waterTime = data['water_time']
-        sensor.waterAutoMode = data['water_auto_mode']
+        sensor.waterAutoMode = bool(data['water_auto_mode'])
         sensor.humility = data['humility']
         sensor.updatedAt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -41,7 +41,6 @@ def sensor_get_all(device_id: str):
 
     if type(device) is DeviceModel:
         sensors = session.query(SensorModel).filter(device_id == DeviceModel.id)
-
         return SensorSchema(many=True).dump(sensors), HTTPStatus.OK
 
     return jsonify({"message": "Device not found"}), HTTPStatus.NOT_FOUND
