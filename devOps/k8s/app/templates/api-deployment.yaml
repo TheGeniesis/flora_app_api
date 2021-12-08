@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: flora_app/python:latest
+        args: ["--start-cgi-server"]
+        env:
+        - name: APP_ENV
+          value: "dev"
+        - name: POSTGRES_DATABASE
+          value: "metric_loc"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: DATABASE_URL
+          value: "pgsql://postgres:postgres@postgresql:5432/metric_loc"
+
+        - name: REDIS_DSN
+          value: "redis://redis"
+        ports:
+        - containerPort: {{ .Values.api.port }}
+        resources: {}

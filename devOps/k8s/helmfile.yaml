@@ -1,0 +1,51 @@
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+
+releases:
+#  - name: metrics-server
+#    chart: bitnami/metrics-server
+#    version: 5.10.8
+#    namespace: kube-system
+#    values:
+#      - charts-config/metrics-server/values.yaml
+#
+#  - name: redis
+#    chart: bitnami/redis
+#    version: 15.6.3
+#    namespace: kube-system
+#    values:
+#      - charts-config/redis/values.yaml
+#
+#  - name: rabbitmq
+#    chart: bitnami/rabbitmq
+#    version: 8.24.10
+#    namespace: kube-system
+#    values:
+#      - charts-config/rabbitmq/values.yaml
+
+  - name: postgresql
+    chart: bitnami/postgresql
+    version: 10.13.11
+    namespace: kube-system
+    values:
+      - charts-config/postgres/values.yaml
+
+  - name: prometheus-operator
+    chart: prometheus-community/kube-prometheus-stack
+    version: 19.2.3
+    namespace: monitoring
+    wait: true
+    timeout: 1200
+    values:
+      - charts-config/prometheus-operator/values.yaml
+    # force: true
+
+  - name: app
+    chart: app
+    version: v0.1.0
+    namespace: default
+    values:
+      - app/values.yaml
