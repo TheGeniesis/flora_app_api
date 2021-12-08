@@ -21,25 +21,20 @@ paths:
           description: Api works
         500:
           $ref: '#responses/500'
-
-  /devices/{device_id}/measurements:
+  /metrics:
     get:
-      operationId: src.controllers.device_measurement.measurement_get
-      summary: Device section
-      parameters:
-        - $ref: '#parameters/device_id'
-      description: Show measurements for device
+      produces:
+        - application/text
+      operationId: src.controllers.metric.index
+      summary: Main Api page
+      description: Show prometheus metrics
       responses:
         200:
-          description: List of measured data for device
-        401:
-          $ref: '#responses/401'
-        403:
-          $ref: '#responses/403'
-        404:
-          $ref: '#responses/404'
+          description: List of collected metrics
         500:
           $ref: '#responses/500'
+
+  /devices/{device_id}/measurements:
     post:
       operationId: src.controllers.device_measurement.measurement_create
       summary: Device section
@@ -57,6 +52,7 @@ paths:
               - humility
               - light
               - water_level
+              - message_id
             properties:
               date:
                 type: string
@@ -73,6 +69,8 @@ paths:
               water_level:
                 type: number
                 format: float
+              message_id:
+                type: string
       responses:
         201:
           $ref: '#responses/201'

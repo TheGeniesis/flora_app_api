@@ -17,6 +17,8 @@ apscheduler = "*"
 pika = "*"
 flask-rabmq = "*"
 flask-cors = "*"
+prometheus-client = "*"
+redis = "*"
 
 [dev-packages]
 

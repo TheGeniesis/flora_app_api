@@ -1,17 +1,16 @@
+import logging
+import os
+
+from flask_cors import CORS
+
 from src.services.core.App import App
 from src.services.core.config.Config import Config
 from src.services.core.dispatcher.EventDispatcher import EventDispatcher
 from src.services.core.loader.consumer import load_consumers
 from src.services.core.loader.listener import load_listeners
-from flask_cors import CORS
-
-import logging
-
-import os
 
 
 if __name__ == "__main__":
-
     app = App().get_app().app
     CORS(app)
 
@@ -35,8 +34,7 @@ if __name__ == "__main__":
 
     load_consumers()
 
-    app.run(port=8004)
-
+    app.run(port=8001)
 
 # from flask import Flask, redirect, url_for
 # from flask_dance.contrib.authentiq import make_authentiq_blueprint

@@ -25,3 +25,8 @@ services:
           - '1883:1883'
         volumes:
           - ./rabbitmq/config/:/data/rabbitmq/
+
+    redis:
+        image: redis:latest
+        ports:
+          - '6379:6379'
