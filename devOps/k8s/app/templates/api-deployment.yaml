@@ -17,21 +17,14 @@ spec:
       containers:
       - name: api
         image: flora_app/python:latest
-        args: ["--start-cgi-server"]
-        env:
-        - name: APP_ENV
-          value: "dev"
-        - name: POSTGRES_DATABASE
-          value: "metric_loc"
-        - name: POSTGRES_USER
-          value: "postgres"
-        - name: POSTGRES_PASSWORD
-          value: "postgres"
-        - name: DATABASE_URL
-          value: "pgsql://postgres:postgres@postgresql:5432/metric_loc"
-
-        - name: REDIS_DSN
-          value: "redis://redis"
+        imagePullPolicy: Never
         ports:
         - containerPort: {{ .Values.api.port }}
         resources: {}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /var/www/project/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: api-configmap

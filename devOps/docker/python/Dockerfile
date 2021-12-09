@@ -1,15 +1,14 @@
-FROM python:3.8
+FROM python:3.8-slim-buster
 
 COPY ./ /var/www/project
+WORKDIR /var/www/project
 
-RUN python -m pip install pipenv && pipenv install
-
+RUN python -m pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 # Set timezone
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN "date"
 
-WORKDIR /var/www/project
 
-CMD FLASK_ENV=development python app.py
+CMD ["pipenv", "run", "python", "app.py"]

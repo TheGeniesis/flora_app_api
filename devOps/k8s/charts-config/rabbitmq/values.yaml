@@ -1,8 +1,9 @@
 auth:
   username: guest
   password: guest
+  existingErlangSecret:  AkW0EsTMWqEOmYNpp29yO0UJgUG2koVM
 
-extraPlugins: "rabbitmq_auth_backend_ldap rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp"
+extraPlugins: "rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp"
 
 clustering:
   enabled: false
@@ -40,3 +41,9 @@ service:
 extraContainerPorts:
   - name: mqtt
     containerPort: 1883
+
+ingress:
+  enabled: true
+  hostname: rabbitmq.flora.local.com
+  annotations:
+    kubernetes.io/ingress.class: nginx

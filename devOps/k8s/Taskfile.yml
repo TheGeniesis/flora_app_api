@@ -88,11 +88,6 @@ tasks:
     desc: local port forward to the grafana dashboaards
     cmds:
       - ./kubectl port-forward --namespace monitoring service/prometheus-operator-grafana 3000:80
-  
-  forward:prometheus:
-    desc: local port forward to the prometheus site
-    cmds:
-      - ./kubectl -n monitoring port-forward svc/prometheus-operator-prometheus 9090:9090
 
   load-image-kind:
     desc: Put image in kind
