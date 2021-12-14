@@ -1,3 +1,7 @@
 devOps
 postgres-data
 rabbitmq
+venv
+jobs.sqlite
+.git
+debug.log

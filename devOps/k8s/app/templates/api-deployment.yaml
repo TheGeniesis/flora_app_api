@@ -4,6 +4,7 @@ metadata:
   name: api
   labels:
     app: api
+
 spec:
   selector:
     matchLabels:
@@ -11,6 +12,8 @@ spec:
   strategy: {}
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         app: api
     spec:
@@ -23,7 +26,7 @@ spec:
         resources: {}
         volumeMounts:
         - name: config-volume
-          mountPath: /var/www/project/
+          mountPath: /var/www/project/env
       volumes:
         - name: config-volume
           configMap:

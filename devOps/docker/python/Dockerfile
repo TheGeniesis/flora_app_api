@@ -10,5 +10,4 @@ RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN "date"
 
-
 CMD ["pipenv", "run", "python", "app.py"]

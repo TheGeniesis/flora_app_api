@@ -53,8 +53,9 @@ tasks:
   deploy:k8s:
     desc: deploy prometheus operator
     cmds:
+      - ./helm plugin install https://github.com/databus23/helm-diff || true
       - ./kubectl apply -f resources/namespaces.yaml
-      - "{{.HELMFILE_BASE_COMMAND}} sync"
+      - "{{.HELMFILE_BASE_COMMAND}} apply"
       - ./kubectl apply -f resources/grafana/dashboards -R
 
   deploy:ingress:
