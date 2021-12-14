@@ -1,4 +1,3 @@
-postgresql:
-  postgresqlDatabase: "postgres"
-  postgresqlUsername: "postgres"
-  postgresqlPassword: "db"
+postgresqlDatabase: "postgres"
+postgresqlUsername: "postgres"
+postgresqlPassword: "db"
