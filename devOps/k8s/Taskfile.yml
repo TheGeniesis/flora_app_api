@@ -63,7 +63,7 @@ tasks:
       - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
       - ./helm plugin install https://github.com/databus23/helm-diff || true
       - ./kubectl apply -f resources/namespaces.yaml
-      - "{{.HELMFILE_BASE_COMMAND}} apply"
+      - "{{.HELMFILE_BASE_COMMAND}} sync"
       - ./kubectl apply -f resources/grafana/dashboards -R
 
   deploy:ingress:
@@ -102,3 +102,4 @@ tasks:
     desc: Put image in kind
     cmds:
       - ./kind load docker-image flora_app/python:latest
+      - ./kind load docker-image flora_app/rabbitmq:latest

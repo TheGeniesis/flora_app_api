@@ -16,3 +16,20 @@ spec:
             name: api
             port:
               number: 80
+  - host: "rabbitmq.flora.local.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: rabbitmq
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/mqtt"
+        backend:
+          service:
+            name: rabbitmq
+            port:
+              number: 1883

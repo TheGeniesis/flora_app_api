@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: flora_app/rabbitmq:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 15672
+          name: front
+        - containerPort: 1883
+          name: mqtt
+        resources: {}

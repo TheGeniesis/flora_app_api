@@ -33,6 +33,7 @@ tasks:
     desc: Build images before deploy on k8s
     cmds:
       - docker build --tag flora_app/python:latest -f ./devOps/docker/python/Dockerfile .
+      - docker build --tag flora_app/rabbitmq -f devOps/docker/rabbitmq/Dockerfile devOps/docker/rabbitmq/.
 
   init:
     desc: Init basic packages and software for first start

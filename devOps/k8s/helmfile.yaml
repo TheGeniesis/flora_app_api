@@ -18,12 +18,6 @@ releases:
     values:
       - charts-config/redis/values.yaml
 
-  - name: rabbitmq
-    chart: bitnami/rabbitmq
-    version: 8.24.10
-    values:
-      - charts-config/rabbitmq/values.yaml
-
   - name: postgresql
     chart: bitnami/postgresql
     version: 10.13.11
