@@ -6,6 +6,7 @@ metadata:
     app: api
 spec:
   ports:
-    - port: {{ .Values.api.port }}
+    - targetPort: {{ .Values.api.port }}
+      port: 80
   selector:
     app: api
