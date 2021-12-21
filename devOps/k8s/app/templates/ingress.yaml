@@ -33,3 +33,10 @@ spec:
             name: rabbitmq
             port:
               number: 1883
+      - pathType: Prefix
+        path: "/amqp"
+        backend:
+          service:
+            name: rabbitmq
+            port:
+              number: 5672

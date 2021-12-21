@@ -12,5 +12,8 @@ spec:
     - targetPort: 1883
       port: 1883
       name: mqtt
+    - targetPort: 5672
+      port: 5672
+      name: ampq
   selector:
     app: rabbitmq

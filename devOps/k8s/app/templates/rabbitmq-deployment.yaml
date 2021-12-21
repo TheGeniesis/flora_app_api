@@ -26,4 +26,6 @@ spec:
           name: front
         - containerPort: 1883
           name: mqtt
+        - containerPort: 5672
+          name: amqp
         resources: {}

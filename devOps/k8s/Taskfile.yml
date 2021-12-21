@@ -9,7 +9,7 @@ vars:
   KIND_VERSION: v0.11.1
   HELMFILE_VERSION: v0.142.0
   HELMFILE_BASE_COMMAND: ./helmfile --helm-binary=./helm
-
+  PROMETHEUS_OPERATOR_VERSION: v0.53.1
 tasks:
   default:
     cmds:
@@ -53,18 +53,20 @@ tasks:
   deploy:k8s:
     desc: deploy prometheus operator
     cmds:
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml --force-conflicts=true --server-side
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-      - ./kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_alertmanagerconfigs.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_alertmanagers.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_podmonitors.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_probes.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_prometheuses.yaml --force-conflicts=true
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_prometheusrules.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_servicemonitors.yaml
+      - ./kubectl apply --server-side -f {{.PROMETHEUS_URL_PATH}}/monitoring.coreos.com_thanosrulers.yaml
       - ./helm plugin install https://github.com/databus23/helm-diff || true
       - ./kubectl apply -f resources/namespaces.yaml
       - "{{.HELMFILE_BASE_COMMAND}} sync"
       - ./kubectl apply -f resources/grafana/dashboards -R
+    vars:
+      PROMETHEUS_URL_PATH: https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd
 
   deploy:ingress:
     desc: deploy basic ingress resources
