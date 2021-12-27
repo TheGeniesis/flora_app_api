@@ -1,2 +1,3 @@
+appName: flora
 api:
   port: 8001

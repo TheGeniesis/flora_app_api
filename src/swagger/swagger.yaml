@@ -8,10 +8,10 @@ consumes:
 produces:
   - application/json
 
-basePath: /api
+basePath: /
 
 paths:
-  /health:
+  /:
     get:
       operationId: src.controllers.health.index
       summary: Main Api page
@@ -21,7 +21,7 @@ paths:
           description: Api works
         500:
           $ref: '#responses/500'
-  /metrics:
+  /api/metrics:
     get:
       produces:
         - application/text
@@ -34,7 +34,7 @@ paths:
         500:
           $ref: '#responses/500'
 
-  /devices/{device_id}/measurements:
+  /api/devices/{device_id}/measurements:
     post:
       operationId: src.controllers.device_measurement.measurement_create
       summary: Device section
@@ -84,7 +84,7 @@ paths:
           $ref: '#responses/404'
         500:
           $ref: '#responses/500'
-  /devices:
+  /api/devices:
     get:
       operationId: src.controllers.device.device_list_get
       summary: Device section
@@ -131,7 +131,7 @@ paths:
           $ref: '#responses/404'
         500:
           $ref: '#responses/500'
-  /devices/{device_id}:
+  /api/devices/{device_id}:
     get:
       operationId: src.controllers.device.device_get
       summary: Device section
@@ -202,7 +202,7 @@ paths:
         500:
           $ref: '#responses/500'
 
-  /devices/{device_id}/sensors:
+  /api/devices/{device_id}/sensors:
     get:
       operationId: src.controllers.device_sensor.sensor_get_all
       summary: Device section
@@ -220,7 +220,7 @@ paths:
           $ref: '#responses/404'
         500:
           $ref: '#responses/500'
-  /devices/{device_id}/sensors/{sensor_id}:
+  /api/devices/{device_id}/sensors/{sensor_id}:
     get:
       operationId: src.controllers.device_sensor.sensor_get
       summary: Device section
@@ -287,7 +287,7 @@ paths:
         500:
           $ref: '#responses/500'
 
-  /measurements:
+  /api/measurements:
     get:
       operationId: src.controllers.measurement.measurement_list_get
       summary: Measurement section

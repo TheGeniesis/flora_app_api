@@ -3,9 +3,9 @@ kind: ServiceMonitor
 metadata:
   generation: 1
   labels:
-    app: api
+    app: {{ .Values.appName }}-api
     release: prometheus-operator
-  name: api-app-sm
+  name: {{ .Values.appName }}-api-app-sm
 spec:
   endpoints:
   - path: /metric
@@ -16,4 +16,4 @@ spec:
     - default
   selector:
     matchLabels:
-      app: api
+      app: {{ .Values.appName }}-api

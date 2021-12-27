@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-configmap
+  name: {{ .Values.appName }}-api-configmap
 data:
   env.ini: |
     [FLASK]

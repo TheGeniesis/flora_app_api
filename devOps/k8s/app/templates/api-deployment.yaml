@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: {{ .Values.appName }}-api
   labels:
-    app: api
+    app: {{ .Values.appName }}-api
 
 spec:
   selector:
     matchLabels:
-      app: api
+      app: {{ .Values.appName }}-api
   strategy: {}
   template:
     metadata:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
       labels:
-        app: api
+        app: {{ .Values.appName }}-api
     spec:
       containers:
-      - name: api
+      - name: {{ .Values.appName }}-api
         image: flora_app/python:latest
         imagePullPolicy: Never
         ports:
@@ -30,4 +30,4 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: api-configmap
+            name: {{ .Values.appName }}-api-configmap
