@@ -17,10 +17,9 @@
 - task rebuild
 > If it fails run `task deploy:k8s`
 
-### Grafana Dashboards
 
-```bash
-task forward:grafana
-# Open in browser http://localhost:3000
-# credentials admin/12tsh3
-```
+### Urls
+
+http://rabbitmq.flora.local.com/
+http://app-api.flora.local.com/
+http://grafana.flora.local.com/
