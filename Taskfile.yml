@@ -29,6 +29,12 @@ tasks:
     cmds:
       - pipenv install --skip-lock
 
+  build:
+    desc: Build images before deploy on k8s
+    cmds:
+      - docker build --tag flora_app/python:latest -f ./devOps/docker/python/Dockerfile .
+      - docker build --tag flora_app/rabbitmq -f devOps/docker/rabbitmq/Dockerfile devOps/docker/rabbitmq/.
+
   init:
     desc: Init basic packages and software for first start
     cmds:
@@ -41,3 +47,4 @@ tasks:
       - task: install:dependencies
       - docker-compose up -d
       - FLASK_ENV=development python app.py
+

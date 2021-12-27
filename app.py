@@ -28,6 +28,9 @@ if __name__ == "__main__":
         ]
     )
 
+    logger = logging.getLogger('Setup')
+    logger.info('main path loaded: %s', os.getcwd())
+
     load_listeners()
 
     EventDispatcher().get_dispatcher().raise_event("onKernelStart")
@@ -35,6 +38,3 @@ if __name__ == "__main__":
     load_consumers()
 
     app.run(port=8001)
-
-# from flask import Flask, redirect, url_for
-# from flask_dance.contrib.authentiq import make_authentiq_blueprint

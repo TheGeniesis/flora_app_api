@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-configmap
+data:
+  env.ini: |
+    [FLASK]
+    FLASK_APP = src
+    FLASK_ENV = development
+
+    [DATABASE]
+    PATH = postgresql+psycopg2://postgres:postgres@postgresql:5432/db
+
+    [RABBITMQ]
+    RABMQ_RABBITMQ_URL = amqp://guest:guest@rabbitmq:5672//
+    RABMQ_SEND_EXCHANGE_NAME = amq.topic
+    RABMQ_SEND_EXCHANGE_TYPE = topic
+
+    [REDIS]
+    HOST = redis-master
+    PORT = 6379
+    DB = 0

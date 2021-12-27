@@ -8,3 +8,9 @@ postgres-data
 
 
 debug.log
+
+kind
+kind_kubeconfig
+kubectl
+helm
+helmfile

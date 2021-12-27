@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  ports:
+    - targetPort: 15672
+      name: front
+      port: 80
+    - targetPort: 1883
+      port: 1883
+      name: mqtt
+    - targetPort: 5672
+      port: 5672
+      name: ampq
+  selector:
+    app: rabbitmq
