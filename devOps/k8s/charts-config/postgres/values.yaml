@@ -1,6 +1,7 @@
+# https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
 postgresqlDatabase: "db"
 postgresqlUsername: "postgres"
 postgresqlPassword: "postgres"
 
-persistence:
-  existingClaim: data-postgresql-postgresql-0
+#persistence:
+#  existingClaim: data-postgresql-postgresql-0
