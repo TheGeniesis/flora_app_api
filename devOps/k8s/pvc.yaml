@@ -1,0 +1,75 @@
+#apiVersion: v1
+#items:
+#- apiVersion: v1
+#  kind: PersistentVolumeClaim
+#  metadata:
+#    finalizers:
+#    - kubernetes.io/pvc-protection
+#    labels:
+#      app.kubernetes.io/instance: postgresql
+#      app.kubernetes.io/name: postgresql
+#      role: primary
+#    name: data-postgresql-postgresql-0
+#    namespace: default
+#  spec:
+#    accessModes:
+#    - ReadWriteOnce
+#    resources:
+#      requests:
+#        storage: 8Gi
+#    storageClassName: standard
+#    volumeMode: Filesystem
+#    volumeName: pvc-aa9834b7-3701-4696-9dd7-fce59d430715
+#  status:
+#    accessModes:
+#    - ReadWriteOnce
+#    capacity:
+#      storage: 8Gi
+#    phase: Bound
+#kind: List
+#metadata:
+#  resourceVersion: ""
+#  selfLink: ""
+
+
+---
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      pv.kubernetes.io/provisioned-by: rancher.io/local-path
+    finalizers:
+    - kubernetes.io/pv-protection
+    name: pvc-aa9834b7-3701-4696-9dd7-fce59d430715
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-postgresql-postgresql-0
+      namespace: default
+    hostPath:
+      path: /var/local-path-provisioner/pvc-aa9834b7-3701-4696-9dd7-fce59d430715_default_data-postgresql-postgresql-0
+      type: DirectoryOrCreate
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - kind-control-plane
+    persistentVolumeReclaimPolicy: Retain
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

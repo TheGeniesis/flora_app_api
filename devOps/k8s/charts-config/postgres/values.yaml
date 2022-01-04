@@ -1,3 +1,6 @@
 postgresqlDatabase: "db"
 postgresqlUsername: "postgres"
 postgresqlPassword: "postgres"
+
+persistence:
+  existingClaim: data-postgresql-postgresql-0

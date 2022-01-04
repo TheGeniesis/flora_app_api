@@ -23,3 +23,8 @@
 http://rabbitmq.flora.local.com/
 http://app-api.flora.local.com/
 http://grafana.flora.local.com/
+
+
+## PVC with KinD
+./kubectl apply -f https://git.io/pvc-test.yaml    
+hostname > /pvc/hostname
