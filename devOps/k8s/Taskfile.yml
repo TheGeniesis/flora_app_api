@@ -18,7 +18,7 @@ tasks:
     desc: KIND cluster create
     cmds:
       - ./kind create cluster --name {{.K8S_NAME}} --image {{.K8S_IMAGE}} --config kind-cluster.yaml
-#      - ./kubectl apply -f pvc.yaml
+
   cluster:delete:
     desc: KIND cluster delete
     cmds:

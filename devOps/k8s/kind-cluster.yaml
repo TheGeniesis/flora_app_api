@@ -28,6 +28,3 @@ nodes:
   - containerPort: 15672
     hostPort: 15672
     protocol: TCP
-  extraMounts:
-    - hostPath: ./shared-storage
-      containerPath: /bitnami
