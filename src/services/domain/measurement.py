@@ -15,6 +15,14 @@ def create(data):
 
     device = session.query(DeviceModel).filter(device_id == DeviceModel.id).first()
 
+    if (not isinstance(data['light'], float) and not isinstance(data['light'], int)) or data['light'] <= 0:
+        data['light'] = 0
+    if (not isinstance(data['humility'], float) and not isinstance(data['humility'], int)) or data['humility'] <= 0:
+        data['humility'] = 0
+    if (not isinstance(data['water_level'], float) and not isinstance(data['water_level'], int)) or data['water_level'] <= 0:
+        data['water_level'] = 0
+    if (not isinstance(data['temperature'], float) and not isinstance(data['temperature'], int)) or data['temperature'] <= 0:
+        data['temperature'] = 0
 
     if type(device) is DeviceModel:
         redis = Redis().get_redis()
