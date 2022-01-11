@@ -28,3 +28,8 @@ nodes:
   - containerPort: 15672
     hostPort: 15672
     protocol: TCP
+  - containerPort: 31883
+    hostPort: 31883
+
+  - containerPort: 31884
+    hostPort: 31884

@@ -8,7 +8,7 @@ metadata:
   name: {{ .Values.appName }}-api-app-sm
 spec:
   endpoints:
-  - path: /metric
+  - path: api/metric
     port: http
     interval: 120s
   namespaceSelector:

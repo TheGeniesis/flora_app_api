@@ -9,11 +9,25 @@ spec:
     - targetPort: 15672
       name: front
       port: 80
-    - targetPort: 1883
-      port: 1883
-      name: mqtt
     - targetPort: 5672
       port: 5672
       name: ampq
+  selector:
+    app: rabbitmq
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-external
+  labels:
+    app: rabbitmq
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 1883
+      port: 1883
+      nodePort: 31883
+      name: mqtt
   selector:
     app: rabbitmq

@@ -26,7 +26,7 @@ releases:
 
   - name: prometheus-operator
     chart: prometheus-community/kube-prometheus-stack
-    version: 25.0.0
+    version: ~30.0.0
     namespace: monitoring
     wait: true
     timeout: 1200
