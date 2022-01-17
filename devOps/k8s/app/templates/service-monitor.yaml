@@ -8,12 +8,13 @@ metadata:
   name: {{ .Values.appName }}-api-app-sm
 spec:
   endpoints:
-  - path: api/metric
-    port: http
-    interval: 120s
+  - path: api/metrics
+    port: {{ .Values.appName }}-api
+    interval: 15s
   namespaceSelector:
     matchNames:
     - default
   selector:
     matchLabels:
       app: {{ .Values.appName }}-api
+
