@@ -30,7 +30,7 @@ class SensorSchedulerListener:
 
     def water_plant(self, sensor):
         if sensor.waterAutoMode:
-            if sensor.humility > 5:
+            if sensor.humility > sensor.measuredHumility:
                 pass
         broker = (BasicBroker()).get_broker()
 

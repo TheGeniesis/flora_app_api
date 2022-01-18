@@ -1,9 +1,12 @@
+from datetime import datetime
+
 import json
 import logging
 
 from sqlalchemy.orm import sessionmaker
 
 from src.models.DeviceModel import DeviceModel
+from src.models.SensorModel import SensorModel
 from src.services.core.db.engine import get_engine
 from src.services.core.redis.Redis import Redis
 
@@ -36,9 +39,9 @@ def create(data):
         logger = logging.getLogger('measurement')
         logger.info('Measurement created for object: %s', device_id)
 
-        return True
-        # EventDispatcher().get_dispatcher().raise_event("onVideoViewReload")
+        save_water_amount(device_id, data['humility'])
 
+        return True
 
 def save_in_redis(name: str, description: str, data: dict, redis):
     prom_data = prepare_data(name, description, data[name], data)
@@ -60,3 +63,15 @@ def prepare_data(name: str, description: str, value: int, data: dict) -> dict:
             'date': data['date']
         }
     }
+
+def save_water_amount(device_id: str, humility: float):
+    session = sessionmaker(bind=get_engine())()
+
+    sensor = session.query(SensorModel).filter(device_id == DeviceModel.id).first()
+
+    if type(sensor) is SensorModel:
+        sensor.measuredHumility = humility
+        sensor.updatedAt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        session.add(sensor)
+        session.commit()

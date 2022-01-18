@@ -2,3 +2,4 @@
 postgresqlDatabase: "db"
 postgresqlUsername: "postgres"
 postgresqlPassword: "postgres"
+postgresqlStatementTimeout: 15

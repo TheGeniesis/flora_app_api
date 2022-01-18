@@ -40,7 +40,7 @@ def device_create():
     device = DeviceModel(name=device_name, createdAt=now)
     session.add(device)
     sensor = SensorModel(device=device, createdAt=now, humility=5, waterAmount=50,
-                         waterTime=datetime.now().replace(hour=7, minute=00), waterAutoMode=True, updatedAt=now)
+                         waterTime=datetime.now().replace(hour=7, minute=00), waterAutoMode=True, measuredHumility=0, updatedAt=now)
     session.add(sensor)
 
     session.commit()

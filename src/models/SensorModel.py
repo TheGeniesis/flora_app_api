@@ -36,6 +36,11 @@ class SensorModel(Base):
         nullable=False
     )
 
+    measuredHumility = Column(
+        Float(),
+        nullable=False
+    )
+
     deviceId = Column(UUID(as_uuid=True), ForeignKey('device.id'))
     device = relationship("DeviceModel", back_populates="sensors")
 
@@ -53,7 +58,7 @@ class SensorModel(Base):
 class SensorSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("id", "waterAmount", "waterTime", "humility", "waterAutoMode", "updatedAt")
+        fields = ("id", "waterAmount", "waterTime", "humility", "measuredHumility", "waterAutoMode", "updatedAt")
 
     # Smart hyperlinking
     _links = ma.Hyperlinks(
