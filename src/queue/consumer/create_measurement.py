@@ -11,7 +11,7 @@ def create_measurement():
     @ramq.queue(exchange_name='amq.topic', routing_key='amq_topic.measurement')
     def consume(body):
         logger = logging.getLogger('queue')
-        logger.warning('Consuming message: %s', 'create_measurement')
+        logger.info('Consuming message: %s', 'create_measurement')
 
         result = create(json.loads(body))
 
