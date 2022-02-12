@@ -1,8 +1,10 @@
 import json
 import logging
 
+import paho.mqtt.client as mqtt
+
 from src.models.SensorModel import SensorModel, SensorSchema
-from src.services.core.rabbit.BasicBroker import BasicBroker
+from src.services.core.config.Config import Config
 from src.services.core.scheduler.BasicScheduler import BasicScheduler
 
 
@@ -49,7 +51,9 @@ class SensorSchedulerListener:
 
         logger.info('Scheduler: Adding message to the queue')
 
-        broker = (BasicBroker()).get_broker()
-
-        broker.send(json.dumps(sensor), routing_key='amq_topic.watering', exchange_name='flask_rabmq')
-
+        client = mqtt.Client()
+        client.username_pw_set(Config().get_config()["RABBITMQ"]["USER"], Config().get_config()["RABBITMQ"]["PASSWORD"])
+        client.connect(Config().get_config()["RABBITMQ"]["HOST"], int(Config().get_config()["RABBITMQ"]["PORT"]), 60)
+        client.loop_start()
+        client.publish("amq_topic.watering", payload=json.dumps(sensor), qos=0, retain=False)
+        client.loop_stop()

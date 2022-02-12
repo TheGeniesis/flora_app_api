@@ -19,6 +19,7 @@ flask-rabmq = "*"
 flask-cors = "*"
 prometheus-client = "*"
 redis = "*"
+paho-mqtt = "*"
 
 [dev-packages]
 

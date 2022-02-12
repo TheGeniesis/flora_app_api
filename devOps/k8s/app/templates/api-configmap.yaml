@@ -12,6 +12,10 @@ data:
     PATH = postgresql+psycopg2://postgres:postgres@postgresql:5432/db
 
     [RABBITMQ]
+    USER = "guest"
+    PASSWORD = "guest"
+    HOST = 192.168.1.148
+    port = 31883
     RABMQ_RABBITMQ_URL = amqp://guest:guest@rabbitmq:5672//
     RABMQ_SEND_EXCHANGE_NAME = amq.topic
     RABMQ_SEND_EXCHANGE_TYPE = topic
